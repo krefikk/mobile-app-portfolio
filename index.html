@@ -8,21 +8,18 @@
     <style>
         /* Global Değişkenler ve Temalar */
         :root {
-            /* Portfolyo Ana Sayfa Renkleri */
             --port-bg: #0B0914;
             --port-card-bg: rgba(255, 255, 255, 0.03);
             --port-card-border: rgba(255, 255, 255, 0.08);
             --text-primary: #FFFFFF;
             --text-secondary: rgba(255, 255, 255, 0.7);
             
-            /* Geçişler için dinamik renk tutucular */
             --current-bg: var(--port-bg);
             --current-accent: #B2FF4A;
             --current-accent-hover: #9BE53E;
             --current-btn-text: #17114A;
         }
 
-        /* SAT Taksi Özel Renk Tanımlamaları */
         .theme-sat-taksi {
             --current-bg: #17114A;
             --current-accent: #B2FF4A;
@@ -30,10 +27,9 @@
             --current-btn-text: #17114A;
         }
 
-        /* Stallio Özel Renk Tanımlamaları (Logoya göre değiştirebilirsiniz) */
         .theme-stallio {
-            --current-bg: #141C24; /* Asil koyu petrol mavi/gri */
-            --current-accent: #FF5A5F; /* Canlı mercan/kırmızı tonu */
+            --current-bg: #141C24; 
+            --current-accent: #FF5A5F; 
             --current-accent-hover: #E04E52;
             --current-btn-text: #FFFFFF;
         }
@@ -57,7 +53,6 @@
             overflow-x: hidden;
         }
 
-        /* Görünüm Yönetimi */
         .view {
             display: none;
             width: 100%;
@@ -73,34 +68,12 @@
             flex-direction: column;
         }
 
-        /* --- PORTFOLYO ANA SAYFA STİLLERİ --- */
-        .portfolio-header {
-            text-align: left;
-            width: 100%;
-            margin-bottom: 32px;
-            padding-left: 8px;
-        }
-
-        .portfolio-header h1 {
-            font-size: 28px;
-            font-weight: 800;
-            margin: 0 0 8px 0;
-            letter-spacing: -0.5px;
-        }
-
-        .portfolio-header p {
-            font-size: 15px;
-            color: var(--text-secondary);
-            margin: 0;
-        }
-
-        .app-list {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            width: 100%;
-        }
-
+        /* Portfolio Stilleri */
+        .portfolio-header { text-align: left; width: 100%; margin-bottom: 32px; padding-left: 8px; }
+        .portfolio-header h1 { font-size: 28px; font-weight: 800; margin: 0 0 8px 0; letter-spacing: -0.5px; }
+        .portfolio-header p { font-size: 15px; color: var(--text-secondary); margin: 0; }
+        .app-list { display: flex; flex-direction: column; gap: 20px; width: 100%; }
+        
         .app-card {
             background: var(--port-card-bg);
             border: 1px solid var(--port-card-border);
@@ -113,149 +86,32 @@
             text-align: left;
             transition: transform 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
         }
+        .app-card:hover { transform: translateY(-2px); border-color: rgba(255, 255, 255, 0.15); background: rgba(255, 255, 255, 0.05); }
+        .app-card:active { transform: scale(0.98); }
+        .card-icon { width: 80px; height: 80px; border-radius: 18px; object-fit: cover; border: 1px solid rgba(255, 255, 255, 0.1); box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); }
+        .card-info { flex: 1; }
+        .card-title { font-size: 18px; font-weight: 700; margin: 0 0 6px 0; }
+        .card-desc { font-size: 13px; color: var(--text-secondary); line-height: 1.4; margin: 0; }
+        .card-arrow { color: var(--text-secondary); display: flex; align-items: center; }
 
-        .app-card:hover {
-            transform: translateY(-2px);
-            border-color: rgba(255, 255, 255, 0.15);
-            background: rgba(255, 255, 255, 0.05);
-        }
+        /* Uygulama Detay Stilleri */
+        .app-container { display: flex; flex-direction: column; align-items: center; text-align: center; width: 100%; }
+        .back-btn { align-self: flex-start; background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.05); color: var(--text-primary); padding: 10px 16px; border-radius: 50px; font-size: 14px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 8px; margin-bottom: 40px; transition: background 0.2s ease; }
+        .back-btn:hover { background: rgba(255, 255, 255, 0.15); }
+        .app-icon { width: 140px; height: 140px; border-radius: 32px; box-shadow: 0 16px 32px rgba(0, 0, 0, 0.4); margin-bottom: 24px; object-fit: cover; border: 1px solid rgba(255, 255, 255, 0.1); }
+        .title { font-size: 32px; font-weight: 800; margin: 0 0 12px 0; letter-spacing: -0.5px; }
+        .description { font-size: 16px; color: var(--text-secondary); line-height: 1.5; margin: 0 0 40px 0; }
+        .download-btn { background-color: var(--current-accent); color: var(--current-btn-text); text-decoration: none; font-weight: 700; font-size: 17px; padding: 18px 32px; border-radius: 50px; display: flex; align-items: center; justify-content: center; gap: 12px; width: 100%; transition: all 0.2s ease; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2); }
+        .download-btn:active { transform: scale(0.97); }
+        .download-btn svg { width: 22px; height: 22px; fill: currentColor; }
+        .warning-text { margin-top: 28px; font-size: 13px; color: rgba(255, 255, 255, 0.4); line-height: 1.5; }
 
-        .app-card:active {
-            transform: scale(0.98);
-        }
-
-        .card-icon {
-            width: 80px;
-            height: 80px;
-            border-radius: 18px;
-            object-fit: cover;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-        }
-
-        .card-info {
-            flex: 1;
-        }
-
-        .card-title {
-            font-size: 18px;
-            font-weight: 700;
-            margin: 0 0 6px 0;
-        }
-
-        .card-desc {
-            font-size: 13px;
-            color: var(--text-secondary);
-            line-height: 1.4;
-            margin: 0;
-        }
-
-        .card-arrow {
-            color: var(--text-secondary);
-            display: flex;
-            align-items: center;
-        }
-
-        /* --- UYGULAMA DETAY SAYFASI STİLLERİ --- */
-        .app-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            width: 100%;
-        }
-
-        .back-btn {
-            align-self: flex-start;
-            background: rgba(255, 255, 255, 0.08);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            color: var(--text-primary);
-            padding: 10px 16px;
-            border-radius: 50px;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-bottom: 40px;
-            transition: background 0.2s ease;
-        }
-
-        .back-btn:hover {
-            background: rgba(255, 255, 255, 0.15);
-        }
-
-        .app-icon {
-            width: 140px;
-            height: 140px;
-            border-radius: 32px;
-            box-shadow: 0 16px 32px rgba(0, 0, 0, 0.4);
-            margin-bottom: 24px;
-            object-fit: cover;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .title {
-            font-size: 32px;
-            font-weight: 800;
-            margin: 0 0 12px 0;
-            letter-spacing: -0.5px;
-        }
-
-        .description {
-            font-size: 16px;
-            color: var(--text-secondary);
-            line-height: 1.5;
-            margin: 0 0 40px 0;
-        }
-
-        .download-btn {
-            background-color: var(--current-accent);
-            color: var(--current-btn-text);
-            text-decoration: none;
-            font-weight: 700;
-            font-size: 17px;
-            padding: 18px 32px;
-            border-radius: 50px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            width: 100%;
-            transition: all 0.2s ease;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
-        }
-
-        .download-btn:active {
-            transform: scale(0.97);
-        }
-
-        .download-btn svg {
-            width: 22px;
-            height: 22px;
-            fill: currentColor;
-        }
-
-        .warning-text {
-            margin-top: 28px;
-            font-size: 13px;
-            color: rgba(255, 255, 255, 0.4);
-            line-height: 1.5;
-        }
-
-        /* Animasyonlar */
-        @keyframes fadeUp {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
+        @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
 
-    <div id="portfolio-view" class="view active">
+    <div id="portfolio-view" class="view">
         <div class="portfolio-header">
             <h1>Uygulamalarım</h1>
             <p>Geliştirdiğim projeleri inceleyebilir ve indirebilirsiniz.</p>
@@ -300,9 +156,7 @@
                 <br>Yalnızca Android cihazlarla uyumludur.
             </p>
             <a href="SatTaksi-debug-1.0.apk" class="download-btn" download>
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                    <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
-                </svg>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
                 APK'yı İndir
             </a>
             <p class="warning-text">
@@ -325,9 +179,7 @@
                 <br>Yalnızca Android cihazlarla uyumludur.
             </p>
             <a href="https://github.com/krefikk/mobile-app-portfolio/releases/tag/v0.7/app-release.apk" class="download-btn">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                    <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
-                </svg>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
                 APK'yı İndir
             </a>
             <p class="warning-text">
@@ -337,32 +189,55 @@
     </div>
 
     <script>
-        function navigateTo(targetView) {
+        // URL'deki # (hash) değerine bakıp doğru sayfayı açan fonksiyon
+        function handleRouting() {
+            let hash = window.location.hash.replace('#', '');
+            
+            // Eğer geçerli bir sayfa adı yoksa ana sayfaya (portfolio) geç
+            if (hash !== 'sat-taksi' && hash !== 'stallio') {
+                hash = 'portfolio';
+            }
+
             // Tüm görünümleri pasif yap
             document.querySelectorAll('.view').forEach(view => {
                 view.classList.remove('active');
             });
 
-            // Body üzerindeki tüm tema sınıflarını temizle
+            // Temayı sıfırla
             document.body.className = '';
 
-            // Hedef görünüme göre işlem yap
-            if (targetView === 'portfolio') {
+            // Seçili sayfayı aktif et
+            if (hash === 'portfolio') {
                 document.getElementById('portfolio-view').classList.add('active');
                 document.title = "Uygulama Portfolyosu";
-            } else if (targetView === 'sat-taksi') {
+            } else if (hash === 'sat-taksi') {
                 document.getElementById('sat-taksi-view').classList.add('active');
                 document.body.classList.add('theme-sat-taksi');
                 document.title = "SAT Taksi - İndir";
-            } else if (targetView === 'stallio') {
+            } else if (hash === 'stallio') {
                 document.getElementById('stallio-view').classList.add('active');
                 document.body.classList.add('theme-stallio');
                 document.title = "Stallio - İndir";
             }
 
-            // Sayfayı her geçişte en yukarı kaydır
             window.scrollTo(0, 0);
         }
+
+        // Kartlara veya Geri Dön butonuna tıklandığında çalışır
+        function navigateTo(targetView) {
+            if (targetView === 'portfolio') {
+                // Ana sayfaya dönerken URL'i tertemiz yapmak için (#'i kaldırır)
+                window.history.pushState("", document.title, window.location.pathname + window.location.search);
+                handleRouting(); 
+            } else {
+                // Diğer sayfalara giderken URL'in sonuna #uygulama-adi ekler
+                window.location.hash = targetView;
+            }
+        }
+
+        // Sayfa ilk açıldığında ve link (hash) manuel değiştiğinde routing'i çalıştır
+        window.addEventListener('load', handleRouting);
+        window.addEventListener('hashchange', handleRouting);
     </script>
 </body>
 </html>
