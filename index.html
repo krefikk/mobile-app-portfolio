@@ -3,15 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SAT Taksi</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <title>Uygulama Portfolyosu</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
     <style>
+        /* Global Değişkenler ve Temalar */
         :root {
-            --bg-color: #17114A; 
+            /* Portfolyo Ana Sayfa Renkleri */
+            --port-bg: #0B0914;
+            --port-card-bg: rgba(255, 255, 255, 0.03);
+            --port-card-border: rgba(255, 255, 255, 0.08);
             --text-primary: #FFFFFF;
             --text-secondary: rgba(255, 255, 255, 0.7);
-            --accent-color: #B2FF4A;
-            --accent-hover: #9BE53E;
+            
+            /* Geçişler için dinamik renk tutucular */
+            --current-bg: var(--port-bg);
+            --current-accent: #B2FF4A;
+            --current-accent-hover: #9BE53E;
+            --current-btn-text: #17114A;
+        }
+
+        /* SAT Taksi Özel Renk Tanımlamaları */
+        .theme-sat-taksi {
+            --current-bg: #17114A;
+            --current-accent: #B2FF4A;
+            --current-accent-hover: #9BE53E;
+            --current-btn-text: #17114A;
+        }
+
+        /* Stallio Özel Renk Tanımlamaları (Logoya göre değiştirebilirsiniz) */
+        .theme-stallio {
+            --current-bg: #141C24; /* Asil koyu petrol mavi/gri */
+            --current-accent: #FF5A5F; /* Canlı mercan/kırmızı tonu */
+            --current-accent-hover: #E04E52;
+            --current-btn-text: #FFFFFF;
         }
 
         * {
@@ -23,25 +47,143 @@
             margin: 0;
             padding: 0;
             font-family: 'Inter', sans-serif;
-            background-color: var(--bg-color);
+            background-color: var(--current-bg);
             color: var(--text-primary);
+            min-height: 100vh;
             display: flex;
             justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            text-align: center;
-            background-attachment: fixed; 
+            align-items: flex-start;
+            transition: background-color 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            overflow-x: hidden;
         }
 
-        .container {
-            max-width: 420px;
+        /* Görünüm Yönetimi */
+        .view {
+            display: none;
+            width: 100%;
+            max-width: 460px;
             padding: 40px 24px;
+            animation: fadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .view.active {
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* --- PORTFOLYO ANA SAYFA STİLLERİ --- */
+        .portfolio-header {
+            text-align: left;
+            width: 100%;
+            margin-bottom: 32px;
+            padding-left: 8px;
+        }
+
+        .portfolio-header h1 {
+            font-size: 28px;
+            font-weight: 800;
+            margin: 0 0 8px 0;
+            letter-spacing: -0.5px;
+        }
+
+        .portfolio-header p {
+            font-size: 15px;
+            color: var(--text-secondary);
+            margin: 0;
+        }
+
+        .app-list {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            width: 100%;
+        }
+
+        .app-card {
+            background: var(--port-card-bg);
+            border: 1px solid var(--port-card-border);
+            border-radius: 24px;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            cursor: pointer;
+            text-align: left;
+            transition: transform 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
+        }
+
+        .app-card:hover {
+            transform: translateY(-2px);
+            border-color: rgba(255, 255, 255, 0.15);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .app-card:active {
+            transform: scale(0.98);
+        }
+
+        .card-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 18px;
+            object-fit: cover;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .card-info {
+            flex: 1;
+        }
+
+        .card-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin: 0 0 6px 0;
+        }
+
+        .card-desc {
+            font-size: 13px;
+            color: var(--text-secondary);
+            line-height: 1.4;
+            margin: 0;
+        }
+
+        .card-arrow {
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+        }
+
+        /* --- UYGULAMA DETAY SAYFASI STİLLERİ --- */
+        .app-container {
             display: flex;
             flex-direction: column;
             align-items: center;
-            animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-            opacity: 0;
-            transform: translateY(20px);
+            text-align: center;
+            width: 100%;
+        }
+
+        .back-btn {
+            align-self: flex-start;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            color: var(--text-primary);
+            padding: 10px 16px;
+            border-radius: 50px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 40px;
+            transition: background 0.2s ease;
+        }
+
+        .back-btn:hover {
+            background: rgba(255, 255, 255, 0.15);
         }
 
         .app-icon {
@@ -69,8 +211,8 @@
         }
 
         .download-btn {
-            background-color: var(--accent-color);
-            color: #17114A;
+            background-color: var(--current-accent);
+            color: var(--current-btn-text);
             text-decoration: none;
             font-weight: 700;
             font-size: 17px;
@@ -82,12 +224,11 @@
             gap: 12px;
             width: 100%;
             transition: all 0.2s ease;
-            box-shadow: 0 8px 24px rgba(178, 255, 74, 0.25);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
         }
 
         .download-btn:active {
             transform: scale(0.97);
-            box-shadow: 0 4px 12px rgba(178, 255, 74, 0.2);
         }
 
         .download-btn svg {
@@ -103,6 +244,7 @@
             line-height: 1.5;
         }
 
+        /* Animasyonlar */
         @keyframes fadeUp {
             to {
                 opacity: 1;
@@ -113,27 +255,114 @@
 </head>
 <body>
 
-    <div class="container">
-        <img src="SATtaksi.png" alt="SAT Taksi Logo" class="app-icon">
-        
-        <h1 class="title">SAT Taksi</h1>
-        
-        <p class="description">
-            Akıllı ulaşım teknolojileriyle hızlı, güvenli ve şeffaf bir yolculuk deneyimi için.
-            <br>Yalnızca Android cihazlarla uyumludur.
-        </p>
-      
-        <a href="SatTaksi-debug-1.0.apk" class="download-btn" download>
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
-            </svg>
-            APK'yı İndir
-        </a>
+    <div id="portfolio-view" class="view active">
+        <div class="portfolio-header">
+            <h1>Uygulamalarım</h1>
+            <p>Geliştirdiğim projeleri inceleyebilir ve indirebilirsiniz.</p>
+        </div>
 
-        <p class="warning-text">
-            * Uygulama Play Store'da yer almadığı için kurulum sırasında telefonunuz "Bilinmeyen Kaynaklar" uyarısı verebilir. Güvenle izin verebilirsiniz.
-        </p>
+        <div class="app-list">
+            <div class="app-card" onclick="navigateTo('sat-taksi')">
+                <img src="SATtaksi.png" alt="SAT Taksi" class="card-icon">
+                <div class="card-info">
+                    <h2 class="card-title">SAT Taksi</h2>
+                    <p class="card-desc">Akıllı ulaşım teknolojileriyle hızlı, güvenli ve şeffaf yolculuk.</p>
+                </div>
+                <div class="card-arrow">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+                </div>
+            </div>
+
+            <div class="app-card" onclick="navigateTo('stallio')">
+                <img src="Stallio.png" alt="Stallio" class="card-icon">
+                <div class="card-info">
+                    <h2 class="card-title">Stallio</h2>
+                    <p class="card-desc">Modern arayüzü ve gelişmiş özellikleriyle yeni nesil asistanınız.</p>
+                </div>
+                <div class="card-arrow">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+                </div>
+            </div>
+        </div>
     </div>
 
+    <div id="sat-taksi-view" class="view">
+        <div class="app-container">
+            <button class="back-btn" onclick="navigateTo('portfolio')">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+                Geri Dön
+            </button>
+
+            <img src="SATtaksi.png" alt="SAT Taksi Logo" class="app-icon">
+            <h1 class="title">SAT Taksi</h1>
+            <p class="description">
+                Akıllı ulaşım teknolojileriyle hızlı, güvenli ve şeffaf bir yolculuk deneyimi için.
+                <br>Yalnızca Android cihazlarla uyumludur.
+            </p>
+            <a href="SatTaksi-debug-1.0.apk" class="download-btn" download>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
+                </svg>
+                APK'yı İndir
+            </a>
+            <p class="warning-text">
+                * Uygulama Play Store'da yer almadığı için kurulum sırasında telefonunuz "Bilinmeyen Kaynaklar" uyarısı verebilir. Güvenle izin verebilirsiniz.
+            </p>
+        </div>
+    </div>
+
+    <div id="stallio-view" class="view">
+        <div class="app-container">
+            <button class="back-btn" onclick="navigateTo('portfolio')">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+                Geri Dön
+            </button>
+
+            <img src="Stallio.png" alt="Stallio Logo" class="app-icon">
+            <h1 class="title">Stallio</h1>
+            <p class="description">
+                Modern arayüzü, üstün performansı ve gelişmiş özellikleri ile hayatınızı kolaylaştıran dijital çözümünüz.
+                <br>Yalnızca Android cihazlarla uyumludur.
+            </p>
+            <a href="Stallio-debug-1.0.apk" class="download-btn" download>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
+                </svg>
+                APK'yı İndir
+            </a>
+            <p class="warning-text">
+                * Uygulama Play Store'da yer almadığı için kurulum sırasında telefonunuz "Bilinmeyen Kaynaklar" uyarısı verebilir. Güvenle izin verebilirsiniz.
+            </p>
+        </div>
+    </div>
+
+    <script>
+        function navigateTo(targetView) {
+            // Tüm görünümleri pasif yap
+            document.querySelectorAll('.view').forEach(view => {
+                view.classList.remove('active');
+            });
+
+            // Body üzerindeki tüm tema sınıflarını temizle
+            document.body.className = '';
+
+            // Hedef görünüme göre işlem yap
+            if (targetView === 'portfolio') {
+                document.getElementById('portfolio-view').classList.add('active');
+                document.title = "Uygulama Portfolyosu";
+            } else if (targetView === 'sat-taksi') {
+                document.getElementById('sat-taksi-view').classList.add('active');
+                document.body.classList.add('theme-sat-taksi');
+                document.title = "SAT Taksi - İndir";
+            } else if (targetView === 'stallio') {
+                document.getElementById('stallio-view').classList.add('active');
+                document.body.classList.add('theme-stallio');
+                document.title = "Stallio - İndir";
+            }
+
+            // Sayfayı her geçişte en yukarı kaydır
+            window.scrollTo(0, 0);
+        }
+    </script>
 </body>
 </html>
